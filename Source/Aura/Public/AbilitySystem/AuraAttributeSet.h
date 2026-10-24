@@ -7,6 +7,33 @@
 #include "AttributeSet.h"
 #include "AuraAttributeSet.generated.h"
 
+USTRUCT()
+struct FEffectProperty {
+    GENERATED_BODY()
+
+    FEffectProperty();
+
+    FGameplayEffectContextHandle EffectContextHandle;
+
+    UPROPERTY()
+    UAbilitySystemComponent* TargetASC = nullptr;
+    UPROPERTY()
+    AActor* TargetAvatarActor = nullptr;
+    UPROPERTY()
+    AController* TargetController = nullptr;
+    UPROPERTY()
+    ACharacter* TargetCharacter = nullptr;
+
+    UPROPERTY()
+    UAbilitySystemComponent* SourceASC = nullptr;
+    UPROPERTY()
+    AActor* SourceAvatarActor = nullptr;
+    UPROPERTY()
+    AController* SourceController = nullptr;
+    UPROPERTY()
+    ACharacter* SourceCharacter = nullptr;
+};
+
 /**
  * 
  */
@@ -22,6 +49,7 @@ public:
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
     virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+    virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
     // FGameplayAttributeData 不是简单的 float，它由 GAS 管理基础值和当前值。
     // Gameplay Effect 应通过 GAS 修改这些属性，而不是直接赋值。
@@ -56,4 +84,7 @@ public:
 
     UFUNCTION()
     void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
+
+private:
+    void SetEffectProperty(const FGameplayEffectModCallbackData& Data, FEffectProperty& Props) const;
 };
