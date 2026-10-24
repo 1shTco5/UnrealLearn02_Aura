@@ -11,7 +11,7 @@ USTRUCT()
 struct FEffectProperty {
     GENERATED_BODY()
 
-    FEffectProperty();
+    FEffectProperty() = default;
 
     FGameplayEffectContextHandle EffectContextHandle;
 
