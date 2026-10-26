@@ -7,45 +7,44 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Aura/Aura.h"
 
-AAuraEnemy::AAuraEnemy()
-{
-	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+AAuraEnemy::AAuraEnemy() {
+    GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 
-	// Ability System
-	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
-	AbilitySystemComponent->SetIsReplicated(true);
-	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+    // Ability System
+    AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
+    AbilitySystemComponent->SetIsReplicated(true);
+    AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
-	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
+    AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 }
 
-void AAuraEnemy::HighlightActor()
-{
-	bHighlighted = true;
-	GetMesh()->SetRenderCustomDepth(true);
-	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+void AAuraEnemy::HighlightActor() {
+    bHighlighted = true;
+    GetMesh()->SetRenderCustomDepth(true);
+    GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 
-	if (Weapon)
-	{
-		Weapon->SetRenderCustomDepth(true);
-		Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
-	}
+    if (Weapon) {
+        Weapon->SetRenderCustomDepth(true);
+        Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+    }
 }
 
-void AAuraEnemy::UnHighlightActor()
-{
-	bHighlighted = false;
-	GetMesh()->SetRenderCustomDepth(false);
+void AAuraEnemy::UnHighlightActor() {
+    bHighlighted = false;
+    GetMesh()->SetRenderCustomDepth(false);
 
-	if (Weapon)
-	{
-		Weapon->SetRenderCustomDepth(false);
-	}
+    if (Weapon) {
+        Weapon->SetRenderCustomDepth(false);
+    }
 }
 
-void AAuraEnemy::BeginPlay()
-{
-	Super::BeginPlay();
+void AAuraEnemy::BeginPlay() {
+    Super::BeginPlay();
 
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+    InitAbilityActorInfo();
+}
+
+void AAuraEnemy::InitAbilityActorInfo() {
+    AbilitySystemComponent->InitAbilityActorInfo(this, this);
+    Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->OnAbilityActorInfoSet();
 }

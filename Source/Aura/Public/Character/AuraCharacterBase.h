@@ -11,25 +11,26 @@ class UAttributeSet;
 class UAbilitySystemComponent;
 
 UCLASS(Abstract)
-class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface
-{
-	GENERATED_BODY()
+class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface {
+    GENERATED_BODY()
 
 public:
-	AAuraCharacterBase();
+    AAuraCharacterBase();
 
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UAttributeSet* GetAttributeSet() const;
+    virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+    UAttributeSet* GetAttributeSet() const;
 
 protected:
-	virtual void BeginPlay() override;
+    virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	TObjectPtr<USkeletalMeshComponent> Weapon;
+    UPROPERTY(EditAnywhere, Category = "Combat")
+    TObjectPtr<USkeletalMeshComponent> Weapon;
 
-	UPROPERTY()
-	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+    UPROPERTY()
+    TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY()
-	TObjectPtr<UAttributeSet> AttributeSet;
+    UPROPERTY()
+    TObjectPtr<UAttributeSet> AttributeSet;
+
+    virtual void InitAbilityActorInfo();
 };

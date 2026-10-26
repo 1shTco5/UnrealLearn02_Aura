@@ -3,28 +3,26 @@
 
 #include "Character/AuraCharacterBase.h"
 
-AAuraCharacterBase::AAuraCharacterBase()
-{
-	PrimaryActorTick.bCanEverTick = false;
+AAuraCharacterBase::AAuraCharacterBase() {
+    PrimaryActorTick.bCanEverTick = false;
 
-	// Weapon
-	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
-	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
-	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    // Weapon
+    Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
+    Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
+    Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
-UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
-{
-	return AbilitySystemComponent;
+UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const {
+    return AbilitySystemComponent;
 }
 
-UAttributeSet* AAuraCharacterBase::GetAttributeSet() const
-{
-	return AttributeSet;
+UAttributeSet* AAuraCharacterBase::GetAttributeSet() const {
+    return AttributeSet;
 }
 
-void AAuraCharacterBase::BeginPlay()
-{
-	Super::BeginPlay();
-	
+void AAuraCharacterBase::BeginPlay() {
+    Super::BeginPlay();
+}
+
+void AAuraCharacterBase::InitAbilityActorInfo() {
 }
