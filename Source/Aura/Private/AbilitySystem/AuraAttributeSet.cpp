@@ -23,16 +23,15 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimePropert
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
 }
 
-void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) {
-    Super::PreAttributeChange(Attribute, NewValue);
+void UAuraAttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const {
+    Super::PreAttributeBaseChange(Attribute, NewValue);
 
     if (Attribute == GetHealthAttribute()) {
         NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
-        UE_LOG(LogTemp, Error, TEXT("Health: %f"), NewValue);
-    }
-    if (Attribute == GetManaAttribute()) {
+        UE_LOG(LogTemp, Warning, TEXT("Health: %f"), NewValue);
+    } else if (Attribute == GetManaAttribute()) {
         NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
-        UE_LOG(LogTemp, Error, TEXT("Mana: %f"), NewValue);
+        UE_LOG(LogTemp, Warning, TEXT("Mana: %f"), NewValue);
     }
 }
 
@@ -69,6 +68,12 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
     FEffectProperty Props;
     SetEffectProperty(Data, Props);
+
+    //if (Data.EvaluatedData.Attribute == GetHealthAttribute()) {
+    //    SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
+    //} else if (Data.EvaluatedData.Attribute == GetManaAttribute()) {
+    //    SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
+    //}
 }
 
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const {
