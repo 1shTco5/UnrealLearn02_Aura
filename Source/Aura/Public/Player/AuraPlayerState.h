@@ -14,19 +14,18 @@ class UAttributeSet;
  * 
  */
 UCLASS()
-class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInterface
-{
-	GENERATED_BODY()
-	
+class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInterface {
+    GENERATED_BODY()
+
 public:
-	AAuraPlayerState();
+    AAuraPlayerState();
 
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UAttributeSet* GetAttributeSet() const;
+    virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+    UAttributeSet* GetAttributeSet() const;
 
-	UPROPERTY()
-	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+    UPROPERTY(VisibleAnywhere)
+    TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY()
-	TObjectPtr<UAttributeSet> AttributeSet;
+    UPROPERTY()
+    TObjectPtr<UAttributeSet> AttributeSet;
 };
