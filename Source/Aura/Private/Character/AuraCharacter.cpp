@@ -35,6 +35,12 @@ void AAuraCharacter::PossessedBy(AController* NewController) {
     InitAbilityActorInfo();
 }
 
+int32 AAuraCharacter::GetCharacterLevel() const {
+    AAuraPlayerState* AuraPS = Cast<AAuraPlayerState>(GetPlayerState());
+    check(AuraPS);
+    return AuraPS->GetCharacterLevel();
+}
+
 void AAuraCharacter::InitAbilityActorInfo() {
     AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
     check(AuraPlayerState);
